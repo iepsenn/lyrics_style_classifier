@@ -3,7 +3,8 @@ import requests
 from bs4 import BeautifulSoup
 from time import sleep
 
-styles = ['axe', 'sertanejo', 'gospelreligioso', 'bossa-nova', 'forro', 'mpb', 'samba']
+#styles = ['axe', 'sertanejo', 'gospelreligioso', 'bossa-nova', 'forro', 'mpb', 'samba']
+styles = ['sertanejo', 'gospelreligioso', 'bossa-nova', 'forro', 'mpb', 'samba']
 
 link = "https://www.letras.mus.br/"
 
@@ -109,13 +110,16 @@ def get_lyrics(links, style):
                 lyrics_letter += letter + " "
 
         filename = str(song) + "(" + str(artist) + ").lyric"
-
-        with open(filename, "w") as lyric:
-            lyric.write(lyrics_letter)
-
-        lyric.close()
         
-        sleep(2)
+        try:
+            with open(filename, "w") as lyric:
+                lyric.write(lyrics_letter)
+            
+            lyric.close()
+            sleep(2)
+            
+        except:
+            pass
      
     os.system(("mv *lyric %s") % (style))
     

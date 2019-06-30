@@ -4,10 +4,6 @@ import pandas as pd
 styles_folders = ['axe', 'sertanejo', 'gospelreligioso', 'bossa-nova', 'forro', 'mpb', 'samba']
 
 
-file = os.listdir('axe')[0]
-file = 'axe/' + file
-
-
 def get_content(folder):
     path = folder + "/"
     lyrics = os.listdir(folder)
