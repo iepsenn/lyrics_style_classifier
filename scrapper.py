@@ -9,10 +9,6 @@ link = "https://www.letras.mus.br/"
 
 print("Scrapping from {}\n".format(link))
 
-#estilo = "mais-acessadas/samba"
-#to_request = link + estilo
-#print(to_request)
-
 import random
 
 def get_lyrics_link(lyrics_number, style):
@@ -20,17 +16,17 @@ def get_lyrics_link(lyrics_number, style):
     lyric_style = "mais-acessadas/" + str(style)
     to_request = link + lyric_style
     
-    try:
-        req = requests.get(to_request)
-    except:
-        if req.status_code != 200:
-           	print("Requisição falhou!!!")
-            content = req.content
-            exit(1)
-    else:
-        if req.status_code == 200:
-            print('Requisição ok!!!')
-            content = req.content
+    #try:
+    req = requests.get(to_request)
+    #except:
+    if req.status_code != 200:
+       	print("Requisição falhou!!!")
+        content = req.content
+        exit(1)
+    #else:
+    if req.status_code == 200:
+        print('Requisição ok!!!')
+        content = req.content
 
     soup = BeautifulSoup(content, 'html.parser')
     lyrics_redirection = soup.findAll('ol', {"class": "top-list_mus cnt-list--col1-3"})
@@ -49,8 +45,6 @@ def get_lyrics_link(lyrics_number, style):
 
     return random.sample(links, lyrics_number)
 
-get_lyrics_link(5, "samba")
-
 import random
 import os
 from time import sleep 
@@ -62,17 +56,17 @@ def get_lyrics(links, style):
     os.system(("mkdir %s")%(style))
     
     for to_request in links:        
-        try:
-            req = requests.get(to_request)
-        except:
-            if req.status_code != 200:
-                print('Requisição falhou!!!')
-                content = req.content
-                exit(1)
-        else:
-            if req.status_code == 200:
-                #print('Requisição ok!!!')
-                content = req.content
+        #try:
+        req = requests.get(to_request)
+        #except:
+        if req.status_code != 200:
+            print('Requisição falhou!!!')
+            content = req.content
+            exit(1)
+        #else:
+        if req.status_code == 200:
+            #print('Requisição ok!!!')
+            content = req.content
 
         soup = BeautifulSoup(content, 'html.parser')
         lyrics_redirection = soup.findAll('article')
@@ -125,15 +119,13 @@ def get_lyrics(links, style):
      
     os.system(("mv *lyric %s") % (style))
     
-    print("{} lyrics scrapped suscefull".format(style))
-
-links = get_lyrics_link(5, "samba")
-get_lyrics(links, "samba")
+    print("{} lyrics scrapped successful".format(style))
 
 def scrapper(number_of_samples):
     for style in styles:
         links = get_lyrics_link(number_of_samples, style)
         get_lyrics(links, style)
 
-import sys
-scrapper(1)
+
+#import sys
+#scrapper(int(sys.argv[1]))
