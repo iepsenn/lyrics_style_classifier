@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from time import sleep
 
 #styles = ['axe', 'sertanejo', 'gospelreligioso', 'bossa-nova', 'forro', 'mpb', 'samba']
-styles = ['sertanejo', 'gospelreligioso', 'bossa-nova', 'forro', 'mpb', 'samba']
+styles = ['mpb', 'samba']
 
 link = "https://www.letras.mus.br/"
 
@@ -56,6 +56,9 @@ def get_lyrics(links, style):
     
     os.system(("mkdir %s")%(style))
     
+    n_samples = len(links)
+    c_sample = 0
+    
     for to_request in links:        
         #try:
         req = requests.get(to_request)
@@ -76,7 +79,9 @@ def get_lyrics(links, style):
         song = (str([t.findAll('h1')for t in title][0]).split('<h1>')[-1]).split('</h1>')[0]
         artist = str([t.findAll('h2')for t in title][0]).split('/')[1]
         
-             
+        c_sample += 1
+        print('getting sample: {}/{}'.format(c_sample,n_samples))             
+        
         lyrics_content = lyrics_redirection
 
         lyrics_letter = ""
@@ -116,7 +121,7 @@ def get_lyrics(links, style):
                 lyric.write(lyrics_letter)
             
             lyric.close()
-            sleep(2)
+            sleep(1)
             
         except:
             pass
